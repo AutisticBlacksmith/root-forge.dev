@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Root Forge</title>
+    <!-- Google Fonts for Dark Fantasy Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #0d0c0c;
+            color: #e3dcd2;
+            font-family: 'Lora', serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Ambient Hearth Glow Background */
+        body::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 140vw;
+            height: 60vh;
+            background: radial-gradient(circle at bottom middle, rgba(226, 76, 12, 0.15) 0%, rgba(144, 34, 2, 0.05) 50%, transparent 100%);
+            filter: blur(40px);
+            z-index: 1;
+            pointer-events: none;
+            animation: flicker 4s infinite alternate;
+        }
+
+        @keyframes flicker {
+            0% { opacity: 0.85; transform: translateX(-50%) scale(1); }
+            50% { opacity: 1; transform: translateX(-49%) scale(1.03); }
+            100% { opacity: 0.9; transform: translateX(-51%) scale(0.97); }
+        }
+
+        /* Spark Particles Background Effect */
+        .sparks {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        /* Heavy Iron Plate Business Card */
+        .iron-card {
+            background: linear-gradient(135deg, #1a1817 0%, #12100f 100%);
+            border: 2px solid #2d2825;
+            box-shadow: 
+                0 0 0 1px #0a0909,
+                inset 0 0 15px rgba(0, 0, 0, 0.8),
+                0 25px 50px -12px rgba(0, 0, 0, 0.9);
+            border-radius: 4px;
+            padding: 40px;
+            width: 100%;
+            max-width: 450px;
+            text-align: center;
+            position: relative;
+            z-index: 3;
+            backdrop-filter: blur(4px);
+        }
+
+        /* Corner Rivets */
+        .rivet {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: #2b2522;
+            border-radius: 50%;
+            box-shadow: inset -1px -1px 2px rgba(255,255,255,0.1), 1px 1px 2px rgba(0,0,0,0.8);
+        }
+        .rivet-tl { top: 12px; left: 12px; }
+        .rivet-tr { top: 12px; right: 12px; }
+        .rivet-bl { bottom: 12px; left: 12px; }
+        .rivet-br { bottom: 12px; right: 12px; }
+
+        /* Molten Yggdrasil Icon Container */
+        .icon-container {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 25px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            filter: drop-shadow(0 0 12px rgba(240, 90, 20, 0.45));
+        }
+
+        /* Title Style */
+        h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 2.2rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            background: linear-gradient(to bottom, #fdfaf5 40%, #d4af37 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .subtitle {
+            font-family: 'Cinzel', serif;
+            font-size: 0.9rem;
+            color: #a69685;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 30px;
+        }
+
+        /* Heavy Iron Buttons */
+        .links-container {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .forge-btn {
+            font-family: 'Cinzel', serif;
+            font-size: 0.95rem;
+            font-weight: 500;
+            letter-spacing: 2px;
+            color: #c9beae;
+            text-decoration: none;
+            text-transform: uppercase;
+            padding: 14px 20px;
+            background: linear-gradient(to bottom, #26211e 0%, #1c1816 100%);
+            border: 1px solid #3d3530;
+            border-radius: 2px;
+            box-shadow: 
+                inset 0 1px 0 rgba(255,255,255,0.05),
+                0 4px 6px rgba(0,0,0,0.4);
+            position: relative;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            overflow: hidden;
+        }
+
+        .forge-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(230, 91, 16, 0.15), transparent);
+            transform: translateX(-100%);
+            transition: none;
+        }
+
+        /* Hover States with Molten Heat Effects */
+        .forge-btn:hover {
+            color: #fff;
+            border-color: #ff6a1a;
+            box-shadow: 
+                0 0 15px rgba(230, 91, 16, 0.4),
+                inset 0 0 8px rgba(230, 91, 16, 0.2);
+            text-shadow: 0 0 4px rgba(255,255,255,0.5);
+            transform: translateY(-2px);
+        }
+
+        .forge-btn:hover::before {
+            transform: translateX(100%);
+            transition: transform 0.6s ease;
+        }
+
+        .forge-btn:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.6);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Animated Forge Spark Sprites -->
+    <svg class="sparks" xmlns="http://www.w3.org/2000/svg">
+        <style>
+            .spark {
+                fill: #ff7315;
+                opacity: 0;
+                animation: floatUp 5s infinite linear;
+            }
+            .s1 { left: 15%; animation-delay: 0s; animation-duration: 6s; }
+            .s2 { left: 40%; animation-delay: 1.5s; animation-duration: 4.5s; }
+            .s3 { left: 65%; animation-delay: 0.5s; animation-duration: 7s; }
+            .s4 { left: 85%; animation-delay: 2.2s; animation-duration: 5s; }
+            
+            @keyframes floatUp {
+                0% { transform: translateY(105vh) translateX(0) scale(0.5); opacity: 0; }
+                10% { opacity: 0.8; }
+                50% { transform: translateY(50vh) translateX(20px) scale(1); }
+                90% { opacity: 0.4; }
+                100% { transform: translateY(-5vh) translateX(-10px) scale(0.2); opacity: 0; }
+            }
+        </style>
+        <circle class="spark s1" cx="15%" cy="0" r="2" />
+        <circle class="spark s2" cx="40%" cy="0" r="3" />
+        <circle class="spark s3" cx="67%" cy="0" r="1.5" />
+        <circle class="spark s4" cx="82%" cy="0" r="2.5" />
+    </svg>
+
+    <!-- The Blacksmith's Card Container -->
+    <div class="iron-card">
+        <!-- Structural Corner Elements -->
+        <div class="rivet rivet-tl"></div>
+        <div class="rivet rivet-tr"></div>
+        <div class="rivet rivet-bl"></div>
+        <div class="rivet rivet-br"></div>
+
+        <!-- Safe Botanical Molten Yggdrasil Vector Icon -->
+        <div class="icon-container">
+            <svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <!-- Heat Gradient Map -->
+                    <linearGradient id="moltenCore" x1="0%" y1="100%" x2="0%" y2="0%">
+                        <stop offset="0%" stop-color="#7a1202" />
+                        <stop offset="30%" stop-color="#e63e00" />
+                        <stop offset="70%" stop-color="#ff8400" />
+                        <stop offset="100%" stop-color="#ffe17d" />
+                    </linearGradient>
+                    <!-- Soft Heat Projection Filter -->
+                    <filter id="forgeGlow">
+                        <feGaussianBlur stdDeviation="1.2" result="coloredBlur"/>
+                        <feMerge>
+                            <feMergeNode in="coloredBlur"/>
+                            <feMergeNode in="SourceGraphic"/>
+                        </feMerge>
+                    </filter>
+                </defs>
+                
+                <g filter="url(#forgeGlow)" stroke="url(#moltenCore)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <!-- Outermost Ring Structure -->
+                    <circle cx="50" cy="50" r="44" stroke-width="2" stroke-dasharray="2 3" opacity="0.6"/>
+                    
+                    <!-- Main Radiating Branches -->
+                    <path d="M50 45 C50 30, 30 25, 20 30" />
+                    <path d="M50 40 C45 22, 28 16, 35 28" />
+                    <path d="M50 35 C50 15, 42 12, 50 12" />
+                    <path d="M50 40 C55 22, 72 16, 65 28" />
+                    <path d="M50 45 C50 30, 70 25, 80 30" />
+                    
+                    <!-- Natural Sweeping Canopy Arcs -->
+                    <path d="M20 30 C12 36, 16 48, 28 45" />
+                    <path d="M80 30 C88 36, 84 48, 72 45" />
+                    <path d="M35 28 C42 20, 58 20, 65 28" />
+
+                    <!-- Braided Linear Central Trunk Base -->
+                    <path d="M46 45 Q52 52 46 60 T48 72" stroke-width="4" />
+                    <path d="M54 45 Q48 52 54 60 T52 72" stroke-width="4" />
+                    <path d="M50 42 L50 72" stroke-width="3.5" />
+
+                    <!-- Matching Earthbound Roots Vector Array -->
+                    <path d="M48 72 C38 75, 28 72, 18 78" />
+                    <path d="M48 72 C42 84, 30 88, 32 92" />
+                    <path d="M50 72 C50 88, 46 90, 50 92" />
+                    <path d="M52 72 C58 84, 70 88, 68 92" />
+                    <path d="M52 72 C62 75, 72 72, 82 78" />
+                    <path d="M18 78 C12 82, 14 90, 26 88" />
+                    <path d="M82 78 C88 82, 86 90, 74 88" />
+                </g>
+            </svg>
+        </div>
+
+        <!-- Typography Heading Elements -->
+        <h1>Root Forge</h1>
+        <div class="subtitle">Root Access &bull; Forged Iron</div>
+
+        <!-- Operational Hyperlinks Mapping -->
+        <div class="links-container">
+            <a href="https://github.com/AutisticBlacksmith" target="_blank" rel="noopener noreferrer" class="forge-btn">The Armory</a>
+            <a href="https://www.linkedin.com/in/ethan-slade-anderson/" target="_blank" rel="noopener noreferrer" class="forge-btn">Guild Hall</a>
+            <a href="mailto:rootforgesupport@gmail.com" class="forge-btn">Send a Raven</a>
+        </div>
+    </div>
+
+</body>
+</html>
